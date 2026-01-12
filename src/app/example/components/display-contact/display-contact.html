@@ -1,0 +1,11 @@
+<header>
+  <h2>Contact</h2>
+</header>
+
+<ul>
+  @for (contact of contacts(); track $index) {
+    <li>
+      <app-display-tel [contact]="contact" [number]="$index + 1"></app-display-tel>
+    </li>
+  }
+</ul>
