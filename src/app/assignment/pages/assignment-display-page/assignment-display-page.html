@@ -1,0 +1,14 @@
+<div>
+  <h2>Assignment Week 07</h2>
+  <button class="add-section-btn" (click)="addSection()">+ Section</button>
+  <hr />
+
+  @for (sec of sections(); track $index) {
+    <app-dynamic-section
+      [(numbers)]="sections()[$index]"
+      [index]="$index"
+      (removeSection)="removeSection($index)"
+    >
+    </app-dynamic-section>
+  }
+</div>

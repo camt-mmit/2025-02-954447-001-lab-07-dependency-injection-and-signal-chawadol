@@ -1,0 +1,45 @@
+/* You can add global styles to this file, and also import other style files */
+
+.app-st-active {
+  background-color: grey;
+}
+
+.app-st-active a {
+  color: white;
+  font-weight: bold;
+}
+nav a {
+  text-decoration: none;
+  width: 100%;
+  color: blue;
+  font-weight: bold;
+}
+
+nav ul {
+  list-style-type: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+nav ul li {
+  width: 120px;
+  text-align: center;
+  border: 2px solid blue;
+  border-radius: 10px;
+  margin: 5px;
+}
+
+nav ul li a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  height: 100%;
+  padding: 15px 0;
+}
+
+.material-symbols-outlined {
+  font-size: 20px;
+}
