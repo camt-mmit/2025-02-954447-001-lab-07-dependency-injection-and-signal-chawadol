@@ -1,5 +1,9 @@
 import { Routes } from '@angular/router';
-// ลบคำว่า pages/ ออก เพราะเราย้ายโฟลเดอร์มาแล้ว
-import { AssignmentPageComponent } from './pages/assignment-display-page/assignment-display-page';
+import { DynamicSection } from './components/dynamic-section/dynamic-section';
 
-export default [{ path: '', component: AssignmentPageComponent }] as Routes;
+export default [
+  {
+    path: '',
+    component: DynamicSection,
+  },
+] as Routes;

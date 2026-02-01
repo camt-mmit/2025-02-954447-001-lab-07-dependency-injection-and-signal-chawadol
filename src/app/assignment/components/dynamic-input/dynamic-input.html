@@ -1,5 +1,34 @@
-<div class="input-group">
-  <label>Number</label>
-  <input type="number" [(ngModel)]="value" />
-  <button (click)="remove.emit()">X</button>
+<h2>
+  <span class="app-section-title">Section {{ number() }}</span>
+  <button class="remove-btn" (click)="remove.emit()" [disabled]="!removable()">X</button>
+</h2>
+
+<div class="app-input-number">
+  <div class="left">
+    @for (n of section().numbers; track n) {
+      <div class="mid">
+        <input
+          type="number"
+          [value]="n.value"
+          (change)="changeNumber($index, $event.target.valueAsNumber)"
+          class="app-input-number-item"
+        />
+        <button
+          class="remove-btn"
+          (click)="removeNumber($index)"
+          [disabled]="section().numbers.length === 1"
+        >
+          X
+        </button>
+      </div>
+    }
+  </div>
+
+  <div class="right">
+    <button (click)="addNumber()">Add Input</button>
+    <div class="app-section-result">
+      Result {{ total() | number }}
+    </div>
+  </div>
 </div>
+

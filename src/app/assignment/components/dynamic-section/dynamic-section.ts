@@ -1,35 +1,40 @@
-import { Component, model, computed, output } from '@angular/core';
-import { DynamicNumberComponent } from '../dynamic-number/dynamic-number';
+import { ChangeDetectionStrategy, Component, effect, inject, model } from '@angular/core';
+import {numbersToSections, sectionToNumbers } from '../../helpers';
+import { SectionModel } from '../../types';
+import { DynamicInput } from '../dynamic-input/dynamic-input';
+import { SectionStorage } from '../../services/section.storage';
 
 @Component({
   selector: 'app-dynamic-section',
-  standalone: true,
-  imports: [DynamicNumberComponent],
+  imports: [DynamicInput],
   templateUrl: './dynamic-section.html',
   styleUrl: './dynamic-section.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DynamicSectionComponent {
-  readonly numbers = model<number[]>([]);
-  readonly index = model<number>(0);
-  readonly removeSection = output<void>();
+export class DynamicSection {
+  readonly dataStorage = inject(SectionStorage);
+   readonly sections = model(
+    numbersToSections(this.dataStorage.get())
+  );
 
-  readonly result = computed(() => {
-    return this.numbers().reduce((sum, curr) => sum + curr, 0);
-  });
-
-  addNumber() {
-    this.numbers.update((nums) => [...nums, 0]);
-  }
-
-  removeNumber(idx: number) {
-    this.numbers.update((nums) => nums.filter((_, i) => i !== idx));
-  }
-
-  updateNumber(idx: number, newValue: number) {
-    this.numbers.update((nums) => {
-      const newNums = [...nums];
-      newNums[idx] = newValue;
-      return newNums;
+  constructor() {
+     effect(() => {
+      this.dataStorage.set(
+        sectionToNumbers(this.sections())
+      );
     });
+  }
+  addSection() {
+    this.sections.update((secs) => [...secs, { numbers: [{ value: 0 }] }]);
+  }
+
+  removeSection(index: number) {
+    this.sections.update((secs) => secs.filter((_, i) => i !== index));
+  }
+
+  changeSection(index: number, value: SectionModel) {
+    this.sections.update((secs) =>
+      secs.map((s, i) => (i === index ? value : s))
+    );
   }
 }

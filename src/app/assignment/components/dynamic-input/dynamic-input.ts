@@ -1,14 +1,40 @@
-import { Component, model, output } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, computed, input, model, output } from '@angular/core';
+import { createNumber, createSection } from '../../helpers';
+import { DecimalPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-dynamic-number',
-  standalone: true,
-  imports: [FormsModule],
-  templateUrl: './dynamic-number.html',
-  styleUrl: './dynamic-number.scss',
+  selector: 'app-dynamic-input',
+  imports: [DecimalPipe],
+  templateUrl: './dynamic-input.html',
+  styleUrl: './dynamic-input.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DynamicNumberComponent {
-  readonly value = model<number>(0);
+export class DynamicInput {
+  readonly section = model(createSection());
+  readonly removable = input(true);
   readonly remove = output<void>();
+  readonly number = input.required();
+  readonly total = computed(() => this.section().numbers.reduce((a, b) => a + b.value, 0));
+
+  addNumber() {
+    this.section.update((s) => ({
+      ...s,
+      numbers: [...s.numbers, createNumber()],
+    }));
+  }
+
+  removeNumber(index: number) {
+    this.section.update((s) => ({
+      ...s,
+      numbers: s.numbers.filter((_, i) => i !== index),
+    }));
+  }
+
+  changeNumber(index: number, value: number) {
+    this.section.update((s) => {
+      const numbers = s.numbers.map((n, i) => (i === index ? { value } : n));
+
+      return { numbers };
+    });
+  }
 }

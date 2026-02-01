@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ResultStorage } from './result.storage';
+import { SectionStorage } from './section.storage';
 
-describe('ResultStorage', () => {
-  let service: ResultStorage;
+describe('SectionStorage', () => {
+  let service: SectionStorage;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(ResultStorage);
+    service = TestBed.inject(SectionStorage);
   });
 
   it('should be created', () => {

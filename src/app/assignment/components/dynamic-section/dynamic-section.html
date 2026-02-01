@@ -1,20 +1,12 @@
-<div class="section-container">
-  <div class="header">
-    <strong>Section {{ index() + 1 }}</strong>
-    <button (click)="removeSection.emit()">Delete Section</button>
-  </div>
-
-  @for (num of numbers(); track $index) {
-    <app-dynamic-number
-      [value]="numbers()[$index]"
-      (valueChange)="updateNumber($index, $event)"
-      (remove)="removeNumber($index)"
-    >
-    </app-dynamic-number>
-  }
-
-  <div style="margin-top: 10px; display: flex; justify-content: space-between; align-items: center">
-    <button class="add-btn" (click)="addNumber()">+ Input</button>
-    <div class="result-area">Result: {{ result() }}</div>
-  </div>
-</div>
+<nav>
+<button (click)="addSection()" class="app-add-btn">Add Section</button>
+</nav>
+@for (section of sections(); track section) {
+  <app-dynamic-input
+    [number]="$index + 1"
+    [section]="section"
+    [removable]="$count > 1"
+    (sectionChange)="changeSection($index, $event)"
+    (remove)="removeSection($index)"
+  />
+}
