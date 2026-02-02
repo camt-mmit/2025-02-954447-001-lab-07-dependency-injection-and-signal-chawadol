@@ -5,6 +5,7 @@
 
 <div class="app-input-number">
   <div class="left">
+    <button (click)="addNumber()" class="app-add-btn">+ Input</button>
     @for (n of section().numbers; track n) {
       <div class="mid">
         {{ $index + 1 }})
@@ -14,7 +15,6 @@
           (change)="changeNumber($index, $event.target.valueAsNumber)"
           class="app-input-number-item"
         />
-        <button (click)="addNumber()" class="app-add-btn">+</button>
         <button
           class="remove-btn"
           (click)="removeNumber($index)"
